@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,29 +26,34 @@ import java.net.URISyntaxException;
 
 public class MainActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-      Button bOn = (Button) findViewById(R.id.bOn);
-      bOn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          new RequestTask().execute("http://192.168.2.14:3000/off");
+  private EditText etAdress;
 
-        }
-      });
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
+
+    final EditText etAdress = (EditText) findViewById(R.id.etAdress);
+
+    Button bOn = (Button) findViewById(R.id.bOn);
+    bOn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        new RequestTask().execute("http://"+etAdress.getText()+":3000/off");
+
+      }
+    });
 
 
-      Button bOff = (Button) findViewById(R.id.bOff);
-      bOff.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          new RequestTask().execute("http://192.168.2.14:3000/on");
+    Button bOff = (Button) findViewById(R.id.bOff);
+    bOff.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        new RequestTask().execute("http://"+etAdress.getText()+":3000/on");
 
-        }
-      });
-    }
+      }
+    });
+  }
 
 
     @Override
